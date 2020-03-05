@@ -18,6 +18,6 @@ struct TreeNode
 
 void DestroyTree(TreeNode* pRoot);
 void ConnectNodes(TreeNode* pParent, TreeNode* pLeft, TreeNode* pRight);
-
+void PrintNodeInBFS(TreeNode* pRoot);
 
 #endif
