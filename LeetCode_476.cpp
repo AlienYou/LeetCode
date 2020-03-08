@@ -35,6 +35,14 @@ int FindComplement_2(int num)
     return result;
 }
 
+int FindComplement_3(int num)
+{
+    unsigned int n = 1;
+    while (n < num)
+        n = (n << 1) + 1;
+    return n ^ num;
+}
+
 void test(const char* testName, int num)
 {
     if (testName == nullptr)
@@ -42,6 +50,7 @@ void test(const char* testName, int num)
     printf("%s:", testName);
     printf("%d\n", FindComplement(num));
     printf("%d\n", FindComplement_2(num));
+    printf("%d\n", FindComplement_3(num));
 }
 
 int main()
