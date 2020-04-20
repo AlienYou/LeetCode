@@ -71,6 +71,15 @@ void test(const char* testName, ListNode* pHead)
     DestroyList(pHead);
 }
 
+ListNode* reverseList2(ListNode* head) {
+    if (head == nullptr || head->next == nullptr)
+        return head;
+    ListNode* revHead = reverseList(head->next);
+    head->next->next = head;
+    head->next = nullptr;
+    return revHead;
+}
+
 void test1()
 {
     ListNode* pNode1 = new ListNode(1);
