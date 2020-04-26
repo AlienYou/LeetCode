@@ -44,3 +44,29 @@ ListNode* mergeKLists(vector<ListNode*>& lists) {
         return nullptr;
     return Merge(lists, 0, lists.size() - 1);
 }
+
+struct Status
+{
+    int val;
+    ListNode* ptr;
+    bool operator<(const Status& rv)const
+    {
+        return val > rv.val;
+    }
+};
+ListNode* mergeKLists2(vector<ListNode*>& lists) {
+    priority_queue<Status> que;
+    for (auto node : lists)
+        que.push({node->val, node});
+    ListNode head, *tail = &head;
+    while (!que.empty())
+    {
+        Status pTop = que.top();
+        que.pop();
+        tail->next = pTop.ptr;
+        if (pTop.ptr->next)
+            que.push({pTop.ptr->next->val, pTop.ptr->next});
+        tail = tail->next;
+    }
+    return head.next;
+}
