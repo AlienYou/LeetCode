@@ -188,11 +188,39 @@ void HeapSort(vector<int>& nums)
 }
 //堆排序
 
+void ShellSort(vector<int>& nums)
+{
+    for (int gap = nums.size() / 2; gap > 0; gap /= 2)
+    {
+        for (int i = gap; i < nums.size(); ++i)
+        {
+            int index = i;
+            if (nums[index] < nums[index - gap])
+            {
+                int temp = nums[index];
+                while (index - gap >= 0 && temp < nums[index - gap])
+                {
+                    nums[index] = nums[index - gap];
+                    index -= gap;
+                }
+                nums[index] = temp;
+            }
+        }
+    }
+}
+
 void Print(vector<int>& nums)
 {
     for (auto &x : nums)
         printf("%d ", x);
     printf("\n");
+}
+
+void testShellSort()
+{
+    vector<int> nums{5, 2, 1, 0, -1};
+    ShellSort(nums);
+    Print(nums);
 }
 
 void testQuickSort()
@@ -240,8 +268,9 @@ void testHeapSort()
 
 int main()
 {
-    srand(time(NULL));
-    testQuickSort();
+    testShellSort();
+    //srand(time(NULL));
+    //testQuickSort();
     //testBubbleSort();
     //testInsertSort();
     //testSelectionSort();
