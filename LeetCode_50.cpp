@@ -29,3 +29,26 @@ double myPow(double x, int n) {
         result = 1 / result;
     return result;
 }
+
+
+double myPowCore(double x, long exp)
+{
+    double res = 1.0;
+    while (exp > 0)
+    {
+        if (exp & 1)
+            res *= x;
+        x *= x;
+        exp >>= 1;
+    }
+    return res;
+}
+double myPow(double x, int n)
+{
+    if (x < 1e-6 && x > -1e-6)
+        return x;
+    if (n == 0)
+        return 1;
+    long exp = n;
+    return n < 0 ? 1 / myPowCore(x, -exp) : myPowCore(x, exp);
+}
