@@ -32,3 +32,18 @@ vector<vector<int>> levelOrder(TreeNode* root) {
     }
     return levelTra;
 }
+void LevelCore(TreeNode* root, vector<vector<int>>& result, int curLevel)
+{
+    if (root == nullptr)
+        return;
+    if (curLevel >= result.size())
+        result.push_back(vector<int>());
+    result[curLevel].push_back(root->val);
+    LevelCore(root->left, result, curLevel + 1);
+    LevelCore(root->right, result, curLevel + 1);
+}
+vector<vector<int>> levelOrderRecursively(TreeNode* root){
+    vector<vector<int>> result;
+    LevelCore(root, result, 0);
+    return result;
+}
