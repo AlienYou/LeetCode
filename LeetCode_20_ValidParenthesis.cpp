@@ -11,39 +11,30 @@
 
 using namespace std;
 
-bool isValid(string s)
-{
-    if (s.length() == 0)
-        return true;
-    if (s.length() & 0x1 == 1)
-        return false;
-    int right = 0;
-    stack<char> charStack;
-
-    while (s[right] != '\0')
-    {
-        if (s[right] == '(' || s[right] == '[' || s[right] == '{')
-            charStack.push(s[right]);
-        else
+bool isValid(string s) {
+        if (s.length() == 0)
+            return true;
+        if (s.length() % 2)
+            return false;
+        unordered_map<char, char> pairs = {
+            {')', '('},
+            {']', '['},
+            {'}', '{'}
+        };
+        stack<char> st;
+        for (int i = 0; i < s.length(); ++i)
         {
-            if (!charStack.empty())
+            if (pairs.count(s[i]))
             {
-                char top = charStack.top();
-                int diff = s[right] - top;
-                if (diff == 1 || diff == 2)
-                    charStack.pop();
+                if (!st.empty() && st.top() == pairs[s[i]])
+                    st.pop();
                 else
                     return false;
             }
             else
-                return false;
+                st.push(s[i]);
         }
-        ++right;
-    }
-    
-    if (charStack.empty())
-        return true;
-    return false;
+        return st.empty();
 }
 
 void test(const char* testName, string s, bool expected)
