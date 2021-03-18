@@ -1,9 +1,9 @@
 #Linux
-*
 *.out
 !*.cpp
 !*.h
 #windows
 !Outdated/
 !November/
+!LCOF/
 
