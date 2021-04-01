@@ -81,6 +81,36 @@ public:
             fast = fast->next;
         }
         return true;
+    };
+    bool isPalindrome1(ListNode* head) {
+        if (head == nullptr || head->next == nullptr)
+            return true;
+        ListNode* slow = head;
+        ListNode* fast = head->next;
+        
+        while (fast != nullptr && fast->next != nullptr) {
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        
+        ListNode* node = slow->next;
+        slow->next = nullptr;
+        ListNode* prev = nullptr;
+        while (node) {
+            ListNode* cur = node;
+            node = node->next;
+            cur->next = prev;
+            prev = cur;
+        }
+        slow = head;
+        
+        while (prev) {
+            if (prev->val != slow->val)
+                return false;
+            prev = prev->next;
+            slow = slow->next;
+        }
+        return true;
     }
 };
 // @lc code=end
