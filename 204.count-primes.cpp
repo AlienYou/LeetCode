@@ -50,37 +50,36 @@
 // @lc code=start
 class Solution {
 public:
-    int countPrimes1(int n) {
-        int result = 0;
-        for (int i = 2; i < n; ++i) {
-            if (judgePrimeNum(i)) {
-                ++result;
+    int countPrimes(int n) {
+        vector<bool> isPrime(n, true);
+        for (int i = 2; i * i < n; ++i) {
+            for (int j = i * i; j < n; j += i) {
+                isPrime[j] = false;
             }
         }
-        return result;
+        int ans = 0;
+        for (int i = 2; i < n; ++i) {
+            if (isPrime[i])
+                ++ans;
+        }
+        return ans;
     }
     
-    bool judgePrimeNum(int n) {
+    int countPrimes1(int n) {
+        int ans = 0;
+        for (int i = 2; i < n; ++i) {
+            if (isPrime(i))
+                ans++;
+        }
+        return ans;
+    }
+    
+    bool isPrime(int n) {
         for (int i = 2; i * i <= n; ++i) {
             if (n % i == 0)
                 return false;
         }
         return true;
-    }
-    int countPrimes(int n) {
-        int result = 0;
-        vector<int> isPrime(n, 1);
-        for (int i = 2; i < n; ++i) {
-            if (isPrime[i]) {
-                result++;
-                if ((long long)i * i < n) {
-                    for (int j = i * i; j < n; j += i) {
-                        isPrime[j] = 0;
-                    }
-                }
-            }
-        }
-        return result;
     }
 };
 // @lc code=end
