@@ -89,7 +89,7 @@ public:
             return 0;
         int total = 0;
         int length = cardPoints.size();
-        int ans = 0;
+        int ans = INT_MAX;
         int left = 0, right = 0, cur = 0, n = length - k;
         while (right < length) {
             cur += cardPoints[right];
@@ -104,7 +104,6 @@ public:
             ++right;
         }
         return total - ans;
-    }
 };
 // @lc code=end
 
