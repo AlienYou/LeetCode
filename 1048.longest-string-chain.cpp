@@ -56,6 +56,23 @@
 // @lc code=start
 class Solution {
 public:
+    int longestStrChain(vector<string>& words) {
+        unordered_map<string, int> dp;
+        sort(words.begin(), words.end(), [](string& s1, string& s2) { return s1.length() < s2.length();});
+        int ans = 0;
+        for (string& curStr : words) {
+            int curMax = 1;
+            for (int i = 0; i < curStr.length(); ++i) {
+                string subStr = curStr.substr(0, i) + curStr.substr(i + 1);
+                if (dp.find(subStr) != dp.end()) {
+                    curMax = max(curMax, dp[subStr] + 1);
+                }
+            }
+            dp[curStr] = curMax;
+            ans = max(ans, curMax);
+        }
+        return ans;
+    }
     unordered_map<string, int> mem;
     int longestStrChain(vector<string>& words) {
         auto cmp = [](string& s1, string& s2) { return s1.length() < s2.length(); };
