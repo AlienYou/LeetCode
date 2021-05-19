@@ -51,7 +51,43 @@
 // @lc code=start
 class Solution {
 public:
+    int partition(vector<int>& nums, int left, int right) {
+        int pivot = rand() % (right - left + 1) + left;
+        swap(nums[right], nums[pivot]);
+        int small = left;
+        for (int i = left; i < right; ++i) {
+            if (nums[i] < nums[right]) {
+                swap(nums[i], nums[small]);
+                small++;
+            }
+        }
+        swap(nums[small], nums[right]);
+        return small;
+    }
+    
+    int quickSelect(vector<int>& nums, int left, int right, int index) {
+        if (left == right)
+            return nums[left];
+        int k = partition(nums, left, right);
+        if (k == index)
+            return nums[k];
+        else if (k < index) 
+            return quickSelect(nums, k + 1, right, index);
+        else 
+            return quickSelect(nums, left, k - 1, index);
+    }
+    
     int minMoves2(vector<int>& nums) {
+        int median = quickSelect(nums, 0, nums.size() - 1, nums.size() >> 1);
+        int ans = 0;
+        //cout << median << endl;
+        for (int i = 0; i < nums.size(); ++i) {
+            ans += abs(nums[i] - median);
+        }
+        return ans;
+    }
+    
+    int minMoves2_1(vector<int>& nums) {
         sort(nums.begin(), nums.end());
         int left = 0, right = nums.size() - 1, count = 0;
         while (left < right) {
