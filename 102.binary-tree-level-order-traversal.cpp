@@ -53,6 +53,30 @@
  */
 class Solution {
 public:
+    vector<vector<int>> levelOrder(TreeNode* root) {
+        if (root == nullptr)
+            return vector<vector<int>>();
+        queue<TreeNode*> que;
+        que.push(root);
+        vector<vector<int>> res;
+        while (!que.empty()) {
+            vector<int> curLevel;
+            int size = que.size();
+            for (int i = 0; i < size; ++i) {
+                TreeNode* cur = que.front();
+                que.pop();
+                curLevel.push_back(cur->val);
+                if (cur->left)
+                    que.push(cur->left);
+                if (cur->right)
+                    que.push(cur->right);
+            }
+            if (size > 0)
+                res.push_back(curLevel);
+        }
+        return res;
+    }
+
     vector<int> inorderTraversal(TreeNode* root) {
         vector<int> result;
         stack<TreeNode*> st;
