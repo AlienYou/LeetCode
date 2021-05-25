@@ -63,6 +63,32 @@
 // @lc code=start
 class Solution {
 public:
+    int evalRPN1(vector<string>& tokens) {
+        vector<int> st;
+        
+        for (int i = 0; i < tokens.size(); ++i) {
+            if (tokens[i] == "+" || tokens[i] == "/" || tokens[i] == "*" || tokens[i] == "-"){
+                int curNum1 = st.back();
+                st.pop_back();
+                int curNum2 = st.back();
+                st.pop_back();
+                st.push_back(getResult(tokens[i], curNum2, curNum1));
+            } else
+                st.push_back(atoi(tokens[i].c_str()));
+        }
+        return st[0];
+    }
+
+    int getResult(string& notation, int curNum1, int curNum2) {
+        if (notation == "/")
+            return curNum1 / curNum2;
+        else if (notation == "*")
+            return curNum1 * curNum2;
+        else if (notation == "-")
+            return curNum1 - curNum2;
+        return curNum1 + curNum2;
+    }
+
     int evalRPN(vector<string>& tokens) {
         stack<int> numSt;
         for (int i = 0; i < tokens.size(); ++i) {
