@@ -45,6 +45,13 @@
  * Follow up: Could you implement the O(n) solution?
  */
 
+//如果没有限制时间复杂度，可通过排序后计算来解决
+//O(n)的复杂度下，利用哈希表保存nums的元素
+//遍历nums，判断当前元素是不是连续序列的首个数字，
+//若是则，叠加遍历获得长度
+//时间复杂度上，虽然有嵌套的while，但实际上这层嵌套循环不会由于!numSet.count的判断
+//不会每次都执行
+
 // @lc code=start
 class Solution {
 public:
@@ -81,6 +88,22 @@ public:
                     curLen++;
                 }
                 res = max(res, curLen);
+            }
+        }
+        return res;
+    }
+    int longestConsecutive(vector<int>& nums) {
+        unordered_set<int> numSet(nums.begin(), nums.end());
+        int res = 0;
+        for (int i = 0; i < nums.size(); ++i) {
+            if (!numSet.count(nums[i] - 1)) {
+                int curSeq = 1;
+                int curEle = nums[i];
+                while (numSet.count(curEle + 1)) {
+                    curEle++;
+                    curSeq++;
+                }
+                res = max(res, curSeq);
             }
         }
         return res;
