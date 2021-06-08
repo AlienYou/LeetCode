@@ -95,6 +95,27 @@ public:
         }
         return root;
     }
+
+    unordered_map<int, int> indexMap;
+    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+        for (int i = 0; i < inorder.size(); ++i)
+            indexMap[inorder[i]] = i;
+        return dfs(preorder, inorder, 0, preorder.size() - 1, 0, inorder.size() - 1);
+    }
+    
+    TreeNode* dfs(vector<int>& preorder, vector<int>& inorder, int preL, int preR, int inoL, int inoR)
+    {
+        if (inoL > inoR)
+            return nullptr;
+        int root = preorder[preL];
+        TreeNode* node = new TreeNode(root);
+        int mid = indexMap[root];
+        int num = mid - inoL;
+        int preSubR = preL + num;
+        node->left = dfs(preorder, inorder, preL + 1, preSubR, inoL, mid - 1);
+        node->right = dfs(preorder, inorder, preSubR + 1, preR, mid + 1, inoR);
+        return node;
+    }
 };
 // @lc code=end
 
